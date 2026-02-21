@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import emailjs from "@emailjs/browser";
 import {
   Cpu,
   Terminal,
@@ -41,14 +42,61 @@ function App() {
     }
   }, []);
 
-  const handleContact = (e) => {
+  const formRef = useRef();
+
+  const handleContact = async (e) => {
     e.preventDefault();
     setFormStatus("TRANSMITTING...");
-    setTimeout(() => {
+
+    // Extract values
+    const formData = new FormData(formRef.current);
+    const userName = formData.get("user_name");
+    const userEmail = formData.get("user_email");
+    const message = formData.get("message");
+
+    // Pass multiple aliases for the email so that the template "To Email" field catches it
+    // regardless of whether it uses {{user_email}}, {{email}}, or {{reply_to}}
+    const templateParams = {
+      user_name: userName,
+      user_email: userEmail,
+      email: userEmail,
+      reply_to: userEmail,
+      message: message,
+    };
+
+    try {
+      // 1. Send main contact form
+      await emailjs.send(
+        "service_8pshv8o",
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        templateParams,
+        {
+          publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        },
+      );
+
+      // 2. Send Auto-Reply
+      await emailjs.send(
+        "service_8pshv8o",
+        import.meta.env.VITE_EMAILJS_AUTO_REPLY_TEMPLATE_ID,
+        templateParams,
+        {
+          publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        },
+      );
+
       setFormStatus("DELIVERED");
       e.target.reset(); // Reset form locally
       setTimeout(() => setFormStatus(""), 3000);
-    }, 1500);
+    } catch (error) {
+      console.error(error);
+      alert(
+        "Error sending transmission: " +
+          (error.text || error.message || "Unknown error"),
+      );
+      setFormStatus("FAILED");
+      setTimeout(() => setFormStatus(""), 3000);
+    }
   };
 
   return (
@@ -146,34 +194,58 @@ function App() {
           <div className="events-container">
             {[
               {
-                mo: "Mar",
+                mo: "Oct",
                 d: "15",
-                title: "Neural Computing Symposium",
-                desc: "Analyzing the future iterations of computational graphs and automated reasoning with guest faculty.",
+                title: "Product Hackathon",
+                desc: "48-hour continuous deployment hackathon. Goal: Productionize an open-source inference endpoint.",
+                image: "/static/productHackathon.png",
+                link: "https://www.linkedin.com/company/airis-nmit/",
               },
               {
-                mo: "Feb",
+                mo: "Nov",
                 d: "22",
-                title: "Transformer Architectures",
-                desc: "Technical seminar comparing self-attention models against classical recursive layers.",
+                title: "Kaggle Competition",
+                desc: "Technical contest comparing predictive models engineered by different computational pods.",
+                image: "/static/kaggle_event.png",
+                link: "https://www.linkedin.com/company/airis-nmit/",
               },
               {
                 mo: "Jan",
                 d: "05",
-                title: "Winter Build Marathon",
-                desc: "48-hour continuous deployment hackathon. Goal: Productionize an open-source inference endpoint.",
+                title: "Peer to Peer Sessions",
+                desc: "Analyzing the future iterations of computational graphs and automated reasoning.",
+                image: "/static/peertopeer.png",
+                link: "https://www.linkedin.com/company/airis-nmit/",
+              },
+              {
+                mo: "Feb",
+                d: "12",
+                title: "Club Recruitments",
+                desc: "Screening algorithms and architectural system evaluations for incoming candidates.",
+                image: "/static/clubExam.png",
+                link: "https://www.linkedin.com/company/airis-nmit/",
               },
             ].map((e, i) => (
-              <div key={i} className="event-row">
-                <div className="event-cell event-date-cell">
+              <div
+                key={i}
+                className="event-row"
+                onClick={() => window.open(e.link, "_blank")}
+              >
+                <div
+                  className="event-row-poster"
+                  style={{ backgroundImage: `url(${e.image})` }}
+                ></div>
+                <div className="event-row-overlay"></div>
+
+                <div className="event-date-cell">
                   <div className="month">{e.mo}</div>
                   <div className="day">{e.d}</div>
                 </div>
-                <div className="event-cell event-info-cell">
+                <div className="event-info-cell">
                   <h3>{e.title}</h3>
                   <p>{e.desc}</p>
                 </div>
-                <div className="event-cell event-action-cell">
+                <div className="event-action-cell">
                   <ArrowRight size={28} />
                 </div>
               </div>
@@ -467,28 +539,108 @@ function App() {
           </h3>
           <div className="team-grid" style={{ marginBottom: "5rem" }}>
             {[
-              "Rachit Gupta",
-              "Aditya Srivastava",
-              "Shourya Bafna",
-              "Yash Dhankar",
-              "Vendant Mande",
-              "Japindar Kaur",
-              "Harshita Joshi",
-              "Shreya Suman",
-            ].map((name, idx) => (
+              {
+                name: "Rachit Gupta",
+                role: "President",
+                image: "/static/people/rachit.jpeg",
+                linkedin: "#",
+              },
+              {
+                name: "Aditya Srivastava",
+                role: "Vice-President",
+                image: "/static/people/aditya.jpeg",
+                linkedin:
+                  "https://www.linkedin.com/in/aditya-srivastava-3bb819323/",
+              },
+              {
+                name: "Shourya Bafna",
+                role: "Technical Head",
+                image: "/static/people/shourya.jpeg",
+                linkedin:
+                  "https://www.linkedin.com/in/shourya-bafna-80a670215/",
+              },
+              {
+                name: "Yash Dhankar",
+                role: "Operations Head",
+                image: "/static/people/yash.jpeg",
+                linkedin: "#",
+              },
+              {
+                name: "Vendant Mande",
+                role: "Marketing Head",
+                image: "/static/people/vedant.jpeg",
+                linkedin: "https://www.linkedin.com/in/vedantmadne/",
+              },
+              {
+                name: "Japindar Kaur",
+                role: "General Secretary",
+                image: "/static/people/japinder.jpeg",
+                linkedin: "#",
+              },
+              {
+                name: "Harshita Joshi",
+                role: "Outreach Head",
+                image: "/static/people/harshita.jpeg",
+                linkedin:
+                  "https://www.linkedin.com/in/harshita-joshi-918ab9320/",
+              },
+              {
+                name: "Shreya Suman",
+                role: "Logistics Head",
+                image: "/static/people/shreya.jpeg",
+                linkedin: "#",
+              },
+            ].map((member, idx) => (
               <div key={`core-${idx}`} className="team-member">
                 <div className="team-member-inner">
                   <div className="team-front">
-                    <div className="avatar">
-                      <Cpu size={28} />
+                    <div
+                      className="avatar"
+                      style={{ overflow: "hidden", padding: 0 }}
+                    >
+                      {member.image ? (
+                        <img
+                          src={member.image}
+                          alt={member.name}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            display: "block",
+                          }}
+                        />
+                      ) : (
+                        <Cpu size={28} />
+                      )}
                     </div>
-                    <h4 className="team-name">{name}</h4>
-                    <p className="team-role">SYS_ADMIN_CORE</p>
+                    <h4 className="team-name">{member.name}</h4>
+                    <p className="team-role">{member.role}</p>
                   </div>
                   <div className="team-back">
-                    <h4>{name}</h4>
+                    <h4>{member.name}</h4>
                     <p>STATUS: ACTIVE</p>
-                    <p>CLEARANCE: LVL 5</p>
+                    <p style={{ marginBottom: "1rem" }}>CLEARANCE: LVL 5</p>
+                    <div style={{ display: "flex", gap: "1rem" }}>
+                      {member.linkedin && (
+                        <a
+                          href={member.linkedin}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{
+                            color: "var(--bg-dark)",
+                            transition: "transform var(--transition-fast)",
+                          }}
+                          onMouseOver={(e) =>
+                            (e.currentTarget.style.transform = "scale(1.2)")
+                          }
+                          onMouseOut={(e) =>
+                            (e.currentTarget.style.transform = "scale(1)")
+                          }
+                        >
+                          <Linkedin size={20} />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -510,20 +662,69 @@ function App() {
             Mentors & Advisors
           </h3>
           <div className="team-grid">
-            {["Kartik Gupta", "Bipul Shahi"].map((name, idx) => (
+            {[
+              {
+                name: "Kartik Gupta",
+                image: "/static/people/kartik.jpeg",
+                linkedin: "https://www.linkedin.com/in/kartikgupta98/",
+              },
+              {
+                name: "Bipul Shahi",
+                image: "/static/people/Bipul.jpeg",
+                linkedin: "https://www.linkedin.com/in/bipulshahi/",
+              },
+            ].map((member, idx) => (
               <div key={`mentor-${idx}`} className="team-member">
                 <div className="team-member-inner">
                   <div className="team-front">
-                    <div className="avatar">
-                      <Terminal size={28} />
+                    <div
+                      className="avatar"
+                      style={{ overflow: "hidden", padding: 0 }}
+                    >
+                      {member.image ? (
+                        <img
+                          src={member.image}
+                          alt={member.name}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            display: "block",
+                          }}
+                        />
+                      ) : (
+                        <Terminal size={28} />
+                      )}
                     </div>
-                    <h4 className="team-name">{name}</h4>
+                    <h4 className="team-name">{member.name}</h4>
                     <p className="team-role">MENTOR_NODE</p>
                   </div>
                   <div className="team-back">
-                    <h4>{name}</h4>
+                    <h4>{member.name}</h4>
                     <p>STATUS: OVERSEER</p>
-                    <p>CLEARANCE: LVL OMEGA</p>
+                    <p style={{ marginBottom: "1rem" }}>CLEARANCE: LVL OMEGA</p>
+                    <div style={{ display: "flex", gap: "1rem" }}>
+                      {/* GitHub Link Removed as Requested */}
+                      {member.linkedin && (
+                        <a
+                          href={member.linkedin}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{
+                            color: "var(--bg-dark)",
+                            transition: "transform var(--transition-fast)",
+                          }}
+                          onMouseOver={(e) =>
+                            (e.currentTarget.style.transform = "scale(1.2)")
+                          }
+                          onMouseOut={(e) =>
+                            (e.currentTarget.style.transform = "scale(1)")
+                          }
+                        >
+                          <Linkedin size={20} />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -569,6 +770,7 @@ function App() {
             </p>
 
             <form
+              ref={formRef}
               onSubmit={handleContact}
               style={{
                 display: "flex",
@@ -596,6 +798,7 @@ function App() {
                 <input
                   required
                   type="text"
+                  name="user_name"
                   style={{
                     background: "var(--bg-dark)",
                     border: "1px solid var(--border-color)",
@@ -627,6 +830,7 @@ function App() {
                 <input
                   required
                   type="email"
+                  name="user_email"
                   style={{
                     background: "var(--bg-dark)",
                     border: "1px solid var(--border-color)",
@@ -658,6 +862,7 @@ function App() {
                 <textarea
                   required
                   rows="4"
+                  name="message"
                   style={{
                     background: "var(--bg-dark)",
                     border: "1px solid var(--border-color)",
