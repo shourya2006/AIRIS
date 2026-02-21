@@ -10,6 +10,7 @@ import {
   Globe,
   Shield,
   Linkedin,
+  Instagram,
   Target,
   Send,
 } from "lucide-react";
@@ -194,12 +195,12 @@ function App() {
           <div className="events-container">
             {[
               {
-                mo: "Oct",
-                d: "15",
+                mo: "Feb",
+                d: "10",
                 title: "Product Hackathon",
                 desc: "48-hour continuous deployment hackathon. Goal: Productionize an open-source inference endpoint.",
                 image: "/static/productHackathon.png",
-                link: "https://www.linkedin.com/company/airis-nmit/",
+                link: "https://www.linkedin.com/posts/airis-ai_artificialintelligence-hackathon-aiinnovation-activity-7429140026187304960--U-a?utm_source=share&utm_medium=member_desktop&rcm=ACoAADZhk4oBL984fo5JdmWPgN1SUBIhAJqTdPE",
               },
               {
                 mo: "Nov",
@@ -207,7 +208,7 @@ function App() {
                 title: "Kaggle Competition",
                 desc: "Technical contest comparing predictive models engineered by different computational pods.",
                 image: "/static/kaggle_event.png",
-                link: "https://www.linkedin.com/company/airis-nmit/",
+                link: "https://www.linkedin.com/posts/airis-ai_ai-genai-studentbuilders-activity-7418277728749281280-Nd_2?utm_source=share&utm_medium=member_desktop&rcm=ACoAADZhk4oBL984fo5JdmWPgN1SUBIhAJqTdPE",
               },
               {
                 mo: "Jan",
@@ -215,7 +216,7 @@ function App() {
                 title: "Peer to Peer Sessions",
                 desc: "Analyzing the future iterations of computational graphs and automated reasoning.",
                 image: "/static/peertopeer.png",
-                link: "https://www.linkedin.com/company/airis-nmit/",
+                link: "https://www.linkedin.com/posts/airis-ai_aicommunity-internshipprep-upskilling-activity-7428052857322631168-q-Ma?utm_source=share&utm_medium=member_desktop&rcm=ACoAADZhk4oBL984fo5JdmWPgN1SUBIhAJqTdPE",
               },
               {
                 mo: "Feb",
@@ -223,7 +224,7 @@ function App() {
                 title: "Club Recruitments",
                 desc: "Screening algorithms and architectural system evaluations for incoming candidates.",
                 image: "/static/clubExam.png",
-                link: "https://www.linkedin.com/company/airis-nmit/",
+                link: "https://www.linkedin.com/posts/airis-ai_genai-airesearch-artificialintelligence-activity-7425157504923287552-a-MG?utm_source=share&utm_medium=member_desktop&rcm=ACoAADZhk4oBL984fo5JdmWPgN1SUBIhAJqTdPE",
               },
             ].map((e, i) => (
               <div
@@ -940,28 +941,20 @@ function App() {
 
           <div className="social-links">
             <a
-              href="https://discord.com"
-              target="_blank"
-              rel="noreferrer"
-              className="social-circle"
-            >
-              <Terminal size={24} />
-            </a>
-            <a
-              href="https://github.com"
-              target="_blank"
-              rel="noreferrer"
-              className="social-circle"
-            >
-              <Cpu size={24} />
-            </a>
-            <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/company/airis-ai/"
               target="_blank"
               rel="noreferrer"
               className="social-circle"
             >
               <Linkedin size={24} />
+            </a>
+            <a
+              href="https://www.instagram.com/airis.nstru/"
+              target="_blank"
+              rel="noreferrer"
+              className="social-circle"
+            >
+              <Instagram size={24} />
             </a>
           </div>
         </div>
