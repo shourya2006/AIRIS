@@ -195,14 +195,6 @@ function App() {
           <div className="events-container">
             {[
               {
-                mo: "Feb",
-                d: "10",
-                title: "Product Hackathon",
-                desc: "48-hour continuous deployment hackathon. Goal: Productionize an open-source inference endpoint.",
-                image: "/static/productHackathon.png",
-                link: "https://www.linkedin.com/posts/airis-ai_artificialintelligence-hackathon-aiinnovation-activity-7429140026187304960--U-a?utm_source=share&utm_medium=member_desktop&rcm=ACoAADZhk4oBL984fo5JdmWPgN1SUBIhAJqTdPE",
-              },
-              {
                 mo: "Nov",
                 d: "22",
                 title: "Kaggle Competition",
@@ -217,6 +209,14 @@ function App() {
                 desc: "Analyzing the future iterations of computational graphs and automated reasoning.",
                 image: "/static/peertopeer.png",
                 link: "https://www.linkedin.com/posts/airis-ai_aicommunity-internshipprep-upskilling-activity-7428052857322631168-q-Ma?utm_source=share&utm_medium=member_desktop&rcm=ACoAADZhk4oBL984fo5JdmWPgN1SUBIhAJqTdPE",
+              },
+              {
+                mo: "Feb",
+                d: "10",
+                title: "Product Hackathon",
+                desc: "48-hour continuous deployment hackathon. Goal: Productionize an open-source inference endpoint.",
+                image: "/static/productHackathon.png",
+                link: "https://www.linkedin.com/posts/airis-ai_artificialintelligence-hackathon-aiinnovation-activity-7429140026187304960--U-a?utm_source=share&utm_medium=member_desktop&rcm=ACoAADZhk4oBL984fo5JdmWPgN1SUBIhAJqTdPE",
               },
               {
                 mo: "Feb",
