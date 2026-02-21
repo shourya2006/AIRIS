@@ -461,6 +461,7 @@ function App() {
             {[
               {
                 icon: <Globe size={56} />,
+                image: "/static/projects/vortex.png",
                 title: "VORTEX",
                 tags: ["RAG", "FastAPI", "Pinecone"],
                 desc: "Microservices-lite platform leveraging RAG and vector embeddings for intelligent, context-aware textbook analysis and automated ML-driven video recommendations.",
@@ -479,7 +480,20 @@ function App() {
                   cursor: p.deployed || p.github ? "pointer" : "default",
                 }}
               >
-                <div className="project-visual">{p.icon}</div>
+                <div
+                  className="project-visual"
+                  style={
+                    p.image
+                      ? {
+                          backgroundImage: `url(${p.image})`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                        }
+                      : {}
+                  }
+                >
+                  {!p.image && p.icon}
+                </div>
                 <div className="project-content">
                   <div className="project-title">
                     <h3>{p.title}</h3>
