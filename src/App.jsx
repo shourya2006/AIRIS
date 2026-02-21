@@ -460,50 +460,33 @@ function App() {
           <div className="grid-3">
             {[
               {
-                icon: <Target size={56} />,
-                title: "Vanguard-Vision",
-                tags: ["TensorFlow", "WASM"],
-                desc: "Real-time client-side object detection deployed via WebAssembly. Low latency inference.",
-              },
-              {
-                icon: <Cpu size={56} />,
-                title: "Iterative Synth",
-                tags: ["PyTorch", "Python"],
-                desc: "LoRA-adapted models fine-tuned specifically for generating automated test suites and proofs.",
-              },
-              {
                 icon: <Globe size={56} />,
-                title: "DataFlow Pipeline",
-                tags: ["Go", "Kafka"],
-                desc: "High-throughput telemetry and data scraping backbone for system training multipliers.",
-              },
-              {
-                icon: <Brain size={56} />,
-                title: "Neuro-Chat",
-                tags: ["LangChain", "React"],
-                desc: "Multi-agent LLM orchestration system capable of handling complex reasoning loops autonomously.",
-              },
-              {
-                icon: <Shield size={56} />,
-                title: "Secur-AI",
-                tags: ["Rust", "PyTorch"],
-                desc: "Adversarial prompt-injection detection firewall for commercial large language models.",
-              },
-              {
-                icon: <Zap size={56} />,
-                title: "Rapid-Edge",
-                tags: ["ONNX", "C++"],
-                desc: "Model quantization toolkit dropping parameter weights by 40% with minimal accuracy loss.",
+                title: "VORTEX",
+                tags: ["RAG", "FastAPI", "Pinecone"],
+                desc: "Microservices-lite platform leveraging RAG and vector embeddings for intelligent, context-aware textbook analysis and automated ML-driven video recommendations.",
+                github: "https://github.com/shourya2006/Vortex",
+                deployed: "https://vortex-jet.vercel.app/",
               },
             ].map((p, i) => (
-              <div key={i} className="card project-card">
+              <div
+                key={i}
+                className="card project-card"
+                onClick={() => {
+                  const link = p.deployed || p.github;
+                  if (link) window.open(link, "_blank");
+                }}
+                style={{
+                  cursor: p.deployed || p.github ? "pointer" : "default",
+                }}
+              >
                 <div className="project-visual">{p.icon}</div>
                 <div className="project-content">
                   <div className="project-title">
                     <h3>{p.title}</h3>
-                    <ExternalLink size={20} />
+                    {(p.deployed || p.github) && <ExternalLink size={20} />}
                   </div>
                   <p className="project-desc">{p.desc}</p>
+
                   <div className="tags">
                     {p.tags.map((t) => (
                       <span key={t} className="tag">
