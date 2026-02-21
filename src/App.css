@@ -342,8 +342,9 @@
 }
 
 .section-title {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
   color: var(--text-main);
+  word-break: break-word;
 }
 
 .section-id {
@@ -1020,14 +1021,10 @@ footer {
 @media (max-width: 768px) {
   /* Navigation */
   .nav-header {
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 1.5rem;
+    display: none;
   }
   .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
+    display: none;
   }
 
   /* Hero Section */
@@ -1059,11 +1056,17 @@ footer {
   }
 
   /* Cinematic Event Accordion Mobile Fallback */
+  .events-container {
+    gap: 1.5rem;
+    border: none;
+  }
   .event-row {
     display: flex;
     flex-direction: column;
     height: auto !important; /* Override the fixed height */
     padding: 2rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
   }
   .event-row:hover {
     transform: none; /* Disable the intense expansion on mobile focus */
