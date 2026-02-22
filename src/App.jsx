@@ -564,7 +564,7 @@ function App() {
                 linkedin: "#",
               },
               {
-                name: "Vendant Mande",
+                name: "Vedant Mande",
                 role: "Marketing Head",
                 image: "/static/people/vedant.jpeg",
                 linkedin: "https://www.linkedin.com/in/vedantmadne/",
